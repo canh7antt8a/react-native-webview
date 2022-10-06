@@ -270,13 +270,13 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     if (enabled) {
       Context ctx = view.getContext();
       if (ctx != null) {
-        view.getSettings().setAppCachePath(ctx.getCacheDir().getAbsolutePath());
+//        view.getSettings().setAppCachePath(ctx.getCacheDir().getAbsolutePath());
         view.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        view.getSettings().setAppCacheEnabled(true);
+//        view.getSettings().setAppCacheEnabled(true);
       }
     } else {
       view.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-      view.getSettings().setAppCacheEnabled(false);
+//      view.getSettings().setAppCacheEnabled(false);
     }
   }
 
@@ -450,7 +450,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     // Disable caching
     view.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-    view.getSettings().setAppCacheEnabled(!enabled);
+//    view.getSettings().setAppCacheEnabled(!enabled);
     view.clearHistory();
     view.clearCache(enabled);
 
@@ -794,7 +794,9 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
           @Override
           protected void onPostExecute(SslStuff sslStuff) {
             if (sslStuff != null) {
-              request.proceed(sslStuff.privKey, sslStuff.certChain);
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                request.proceed(sslStuff.privKey, sslStuff.certChain);
+              }
             }
           }
         };
@@ -1424,3 +1426,4 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     }
   }
 }
+
